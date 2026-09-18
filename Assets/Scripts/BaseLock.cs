@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BaseLock : MonoBehaviour
 {
+    public UnityEvent<GameObject> OnUnlock;
     public GameObject keyNeeded;
 
     /// <summary>
@@ -22,6 +24,7 @@ public class BaseLock : MonoBehaviour
     /// </summary>
     void UnlockObstacle(GameObject key)
     {
+        OnUnlock.Invoke(key);
         Debug.Log($"{key.name} was used on {gameObject.name}");
         Destroy(gameObject);
     }
