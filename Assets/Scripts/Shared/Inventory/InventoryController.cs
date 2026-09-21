@@ -136,7 +136,7 @@ public class InventoryController : MonoBehaviour
         }
         if (!spawned.Add(point.itemId)) return;
         var item = Instantiate(point.prefab, point.transform.position, point.transform.rotation);
-        item.Initialize(point.itemId, point.targetId, point.prefab);
+        item.Initialize(point.itemId, point.targetId, point.prefab, source: point);
         live.Add(point.itemId, item);
     }
 

@@ -6,6 +6,7 @@ public class ItemSpawnPoint : MonoBehaviour
     public string targetId;
     public InventoryItem prefab;
     public bool spawnOnStart = true;
+    public bool HasBeenAcquired { get; private set; }
     bool requested;
 
     void Start() { if (spawnOnStart) requested = true; }
@@ -18,4 +19,5 @@ public class ItemSpawnPoint : MonoBehaviour
         }
     }
     public void SpawnOnce() { requested = true; }
+    public void MarkAcquired() { HasBeenAcquired = true; }
 }

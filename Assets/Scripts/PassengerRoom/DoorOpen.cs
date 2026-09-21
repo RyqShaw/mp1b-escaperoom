@@ -9,6 +9,7 @@ public class DoorOpen : MonoBehaviour
     private Quaternion closedRotation;
     private Quaternion openRotation;
     private bool isOpening;
+    public bool IsOpen { get; private set; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,6 +34,7 @@ public class DoorOpen : MonoBehaviour
             {
                 transform.localRotation = openRotation;
                 isOpening = false;
+                IsOpen = true;
                 opened.Invoke();
             }
         }

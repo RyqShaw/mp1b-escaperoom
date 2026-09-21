@@ -12,6 +12,7 @@ public class InventoryItem : MonoBehaviour, IXRSelectFilter
     [SerializeField] XRGrabInteractable grab;
     [Tooltip("Components implementing IInventoryStorageRule. All must allow storage.")]
     public MonoBehaviour[] storageRules = new MonoBehaviour[0];
+    ItemSpawnPoint spawnPoint;
 
     public string ItemId { get; private set; }
     public string TargetId { get; private set; }
@@ -32,12 +33,14 @@ public class InventoryItem : MonoBehaviour, IXRSelectFilter
         }
     }
 
-    public void Initialize(string id, string targetId, InventoryItem prefab, string state = "{}")
+    public void Initialize(string id, string targetId, InventoryItem prefab, string state = "{}",
+        ItemSpawnPoint source = null)
     {
         ItemId = id;
         TargetId = targetId;
         Prefab = prefab;
         stateJson = state;
+        spawnPoint = source;
     }
 
     public bool Process(IXRSelectInteractor interactor, IXRSelectInteractable interactable)
@@ -53,4 +56,17 @@ public class InventoryItem : MonoBehaviour, IXRSelectFilter
     }
 
     public void MarkInstalled() { Installed = true; }
+
+    // Wired to Select Entered in each portable item's Inspector.
+    public void OnPickedUp()
+    {
+        // Retrieved copies need no source: the room already remembers the first pickup.
+        if (spawnPoint == null || SystemRelease) return;
+        foreach (var interactor in grab.interactorsSelecting)
+        {
+            if (!(interactor is XRBaseInputInteractor)) continue;
+            spawnPoint.MarkAcquired();
+            return;
+        }
+    }
 }
