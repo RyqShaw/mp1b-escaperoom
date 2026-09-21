@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &991000000000000010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 991000000000000011}
+  m_Layer: 2
+  m_Name: InstallPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &991000000000000011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991000000000000010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1454520429279062571}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3793065228129435443
 GameObject:
   m_ObjectHideFlags: 0
@@ -14,6 +45,8 @@ GameObject:
   - component: {fileID: 475085527452721929}
   - component: {fileID: 9200000000000000030}
   - component: {fileID: 970000000000000002}
+  - component: {fileID: 990000000000001001}
+  - component: {fileID: 991000000000000002}
   m_Layer: 0
   m_Name: DoorKnobItem
   m_TagString: Untagged
@@ -35,6 +68,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1355244999721190724}
+  - {fileID: 991000000000000011}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8457868549761005176
@@ -137,9 +171,9 @@ MonoBehaviour:
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 970000000000000002}
-        m_TargetAssemblyTypeName: InventoryItem, Assembly-CSharp
-        m_MethodName: Released
+      - m_Target: {fileID: 991000000000000002}
+        m_TargetAssemblyTypeName: KnobAimInstall, Assembly-CSharp
+        m_MethodName: OnReleased
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -164,8 +198,8 @@ MonoBehaviour:
   m_Activated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 970000000000000002}
-        m_TargetAssemblyTypeName: InventoryItem, Assembly-CSharp
+      - m_Target: {fileID: 990000000000001001}
+        m_TargetAssemblyTypeName: KnobItemInteraction, Assembly-CSharp
         m_MethodName: Use
         m_Mode: 0
         m_Arguments:
@@ -182,6 +216,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters:
   - {fileID: 970000000000000002}
+  - {fileID: 990000000000001001}
   m_StartingInteractionStrengthFilters: []
   m_AutoFindParentInteractableInHierarchy: 0
   m_ParentInteractableObject: {fileID: 0}
@@ -200,12 +235,12 @@ MonoBehaviour:
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
-  m_SmoothPosition: 0
-  m_SmoothPositionAmount: 8
+  m_SmoothPosition: 1
+  m_SmoothPositionAmount: 5
   m_TightenPosition: 0.1
   m_TrackRotation: 1
-  m_SmoothRotation: 0
-  m_SmoothRotationAmount: 8
+  m_SmoothRotation: 1
+  m_SmoothRotationAmount: 5
   m_TightenRotation: 0.1
   m_TrackScale: 1
   m_SmoothScale: 0
@@ -256,6 +291,59 @@ MonoBehaviour:
   knob: {fileID: 475085527452721929}
   socketFilter: {fileID: 0}
   knobTurn: {fileID: 4900099923147257561}
+  installation: {fileID: 991000000000000002}
+--- !u!114 &970000000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793065228129435443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f367c4fb8224082a86a89a92dd4bca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
+  displayName: Door knob
+  allowStorage: 1
+  stateJson: '{}'
+  grab: {fileID: 475085527452721929}
+  storageRules:
+  - {fileID: 990000000000001001}
+--- !u!114 &990000000000001001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793065228129435443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5633b74b0f574a618417de4804d4b16f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KnobItemInteraction
+  item: {fileID: 970000000000000002}
+  installation: {fileID: 991000000000000002}
+  prompt: {fileID: 9200000000000000030}
+  turn: {fileID: 4900099923147257561}
+--- !u!114 &991000000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793065228129435443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4608bb09a78449bf87005be06fa0a759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KnobAimInstall
+  item: {fileID: 970000000000000002}
+  socketFilter: {fileID: 0}
+  target: {fileID: 0}
+  toolTip: {fileID: 991000000000000011}
+  preview: {fileID: 0}
+  maxDistance: 3
 --- !u!1 &4590230649129571482
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,6 +450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KnobTurn
   door: {fileID: 0}
   socketFilter: {fileID: 0}
+  installation: {fileID: 991000000000000002}
   stepAngle: 30
   requiredSteps: 3
   speed: 30
@@ -455,23 +544,3 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &970000000000000002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3793065228129435443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f367c4fb8224082a86a89a92dd4bca9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
-  displayName: Door knob
-  allowStorage: 1
-  stateJson: "{}"
-  grab: {fileID: 475085527452721929}
-  wrenchInstallation: {fileID: 0}
-  wrenchPrompt: {fileID: 0}
-  knobPrompt: {fileID: 9200000000000000030}
-  knobTurn: {fileID: 4900099923147257561}

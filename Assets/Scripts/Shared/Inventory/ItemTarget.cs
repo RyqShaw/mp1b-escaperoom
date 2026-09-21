@@ -7,13 +7,8 @@ public class ItemTarget : MonoBehaviour
 {
     public string targetId;
     public string acceptedItemId;
-    public KnobSocketFilter knobFilter;
-    public DoorOpen door;
-    public WrenchSocketFilter wrenchFilter;
-    public WrenchTurn wrenchTurn;
-    public DrawerOpen drawer;
-    public Collider aimCollider;
-    public GameObject preview;
+    [Tooltip("A component implementing IItemSocketRule.")]
+    public MonoBehaviour socketRule;
     static readonly Dictionary<string, ItemTarget> targets = new Dictionary<string, ItemTarget>();
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -33,7 +28,6 @@ public class ItemTarget : MonoBehaviour
     void OnDisable()
     {
         if (Find(targetId) == this) targets.Remove(targetId);
-        if (preview != null) preview.SetActive(false);
     }
 
     public static ItemTarget Find(string id)
@@ -44,9 +38,7 @@ public class ItemTarget : MonoBehaviour
     public bool Accepts(InventoryItem item, XRSocketInteractor socket)
     {
         if (item.ItemId != acceptedItemId || item.TargetId != targetId) return false;
-        if (knobFilter != null) return socket == knobFilter.socket &&
-            (knobFilter.InstallationRequested || knobFilter.IsInstalled);
-        return wrenchFilter != null && socket == wrenchFilter.socket &&
-            (wrenchFilter.InstallationRequested || wrenchFilter.IsInstalled);
+        return socketRule != null && socketRule.isActiveAndEnabled &&
+            socketRule is IItemSocketRule rule && rule.Accepts(socket);
     }
 }

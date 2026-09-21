@@ -7,6 +7,7 @@ public class KnobPrompt : MonoBehaviour
     public XRGrabInteractable knob;
     public KnobSocketFilter socketFilter;
     public KnobTurn knobTurn;
+    public KnobAimInstall installation;
 
     private bool wasComplete;
     private float unlockedUntil;
@@ -41,15 +42,17 @@ public class KnobPrompt : MonoBehaviour
         wasComplete = knobTurn.IsComplete;
 
         string message = null;
-        if (!socketFilter.IsInstalled)
+        if (installation.IsInstalling)
         {
-            if (knob.isSelected)
+            message = "Installing...";
+        }
+        else if (!socketFilter.IsInstalled)
+        {
+            if (installation.IsHeld)
             {
-                // Show install instructions only inside the correct socket's range.
-                if (socketFilter.socket.IsHovering(knob))
-                {
-                    message = "Press Grip again to install";
-                }
+                message = installation.IsAiming
+                    ? "Press Grip again to fit the knob"
+                    : "Point at the door fitting";
             }
             else if (playerHovering)
             {

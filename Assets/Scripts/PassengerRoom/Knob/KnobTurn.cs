@@ -4,6 +4,7 @@ public class KnobTurn : MonoBehaviour
 {
     public DoorOpen door;
     public KnobSocketFilter socketFilter;
+    public KnobAimInstall installation;
     public float stepAngle = 30f;
     public int requiredSteps = 3;
     public float speed = 60f;
@@ -48,7 +49,8 @@ public class KnobTurn : MonoBehaviour
     [ContextMenu("Turn One Step")]
     public void Turn()
     {
-        if (InventoryController.BlocksWorld || socketFilter == null || door == null || !socketFilter.IsInstalled)
+        if (InventoryController.BlocksWorld || socketFilter == null || door == null || !socketFilter.IsInstalled ||
+            installation == null || installation.IsInstalling)
         {
             return;
         }
