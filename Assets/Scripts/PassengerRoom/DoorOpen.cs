@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DoorOpen : MonoBehaviour
 {
     public float openAngle = 90f;
     public float speed = 90f;
+    public UnityEvent opened = new UnityEvent();
     private Quaternion closedRotation;
     private Quaternion openRotation;
     private bool isOpening;
@@ -31,6 +33,7 @@ public class DoorOpen : MonoBehaviour
             {
                 transform.localRotation = openRotation;
                 isOpening = false;
+                opened.Invoke();
             }
         }
     }
