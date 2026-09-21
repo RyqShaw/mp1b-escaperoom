@@ -3,21 +3,11 @@
 // - No Glow Option
 // - Softness is applied on both side of the outline
 
-Shader "PassengerRoom/UV Distance Field" {
+Shader "PassengerRoom/Viewing Angle Distance Field" {
 
 Properties {
- _PRVisible ("Visible", Float) = 0
- _PRLightRange ("Light range (runtime)", Float) = 4
- _PRConeThreshold ("Cone cosine (runtime from Spot Angle)", Range(0,1)) = 0.94
- _ConeFade ("Cone cosine fade", Range(0.001,0.2)) = 0.035
- _IncidenceThreshold ("Minimum incidence cosine", Range(0,1)) = 0.55
- _IncidenceFade ("Incidence fade", Range(0.001,0.5)) = 0.2
- _MaximumDistance ("Maximum reveal distance", Float) = 4
- _DistanceFade ("Distance fade (metres)", Float) = 0.5
- _RevealThreshold ("Reveal threshold", Range(0,0.99)) = 0.05
- _RevealFade ("Reveal fade", Range(0.001,1)) = 0.4
- _PRLightPosition ("UV lamp position", Vector) = (0,0,0,0)
- _PRLightDirection ("UV lamp direction", Vector) = (0,0,1,0)
+ _ViewThreshold ("View cosine threshold (below = visible)", Range(0,1)) = 0.65
+ _ViewFade ("View cosine fade", Range(0.001,0.5)) = 0.2
 	_FaceColor          ("Face Color", Color) = (1,1,1,1)
 	_FaceDilate			("Face Dilate", Range(-1,1)) = 0
 
@@ -105,9 +95,7 @@ SubShader {
 		#include "UnityCG.cginc"
 		#include "UnityUI.cginc"
 		#include "Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc"
- float _PRVisible, _PRLightRange, _PRConeThreshold;
- float _ConeFade, _IncidenceThreshold, _IncidenceFade, _MaximumDistance, _DistanceFade, _RevealThreshold, _RevealFade;
- float4 _PRLightPosition, _PRLightDirection;
+ float _ViewThreshold, _ViewFade;
 
 		struct vertex_t {
 			UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -260,18 +248,11 @@ SubShader {
 			clip(c.a - 0.001);
 			#endif
 
-            float3 delta = input.prWorld - _PRLightPosition.xyz;
-            float distanceToLight = length(delta);
-            float3 lightDirection = delta / max(distanceToLight, 0.0001);
-            float cone = smoothstep(_PRConeThreshold, _PRConeThreshold + _ConeFade,
-                dot(normalize(_PRLightDirection.xyz), lightDirection));
-            float incidence = smoothstep(_IncidenceThreshold, _IncidenceThreshold + _IncidenceFade,
-                dot(normalize(input.prNormal), -lightDirection));
-            float range = max(0.001, min(_MaximumDistance, _PRLightRange));
-            float distanceFade = 1 - smoothstep(max(0, range - max(0.001, _DistanceFade)), range, distanceToLight);
-            float reveal = smoothstep(_RevealThreshold, _RevealThreshold + _RevealFade,
-                cone * incidence * distanceFade);
-            c *= _PRVisible * reveal;
+            float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - input.prWorld);
+            float alignment = dot(normalize(input.prNormal), viewDirection);
+            float reveal = (1 - smoothstep(_ViewThreshold, _ViewThreshold + _ViewFade, alignment))
+                * step(0, alignment);
+            c *= reveal;
             clip(c.a-.001);
             return c;
 		}
