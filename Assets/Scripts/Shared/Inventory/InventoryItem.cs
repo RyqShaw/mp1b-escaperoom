@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Filtering;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
@@ -12,7 +13,19 @@ public class InventoryItem : MonoBehaviour, IXRSelectFilter
     [SerializeField] XRGrabInteractable grab;
     [Tooltip("Components implementing IInventoryStorageRule. All must allow storage.")]
     public MonoBehaviour[] storageRules = new MonoBehaviour[0];
+    [SerializeField] AudioSource grabAudio;
     ItemSpawnPoint spawnPoint;
+    bool grabSoundPlayed;
+
+    void OnEnable() { grab.lastSelectExited.AddListener(OnReleased); }
+
+    void OnDisable()
+    {
+        grab.lastSelectExited.RemoveListener(OnReleased);
+        grabSoundPlayed = false;
+    }
+
+    void OnReleased(SelectExitEventArgs args) { grabSoundPlayed = false; }
 
     public string ItemId { get; private set; }
     public string TargetId { get; private set; }
@@ -60,12 +73,18 @@ public class InventoryItem : MonoBehaviour, IXRSelectFilter
     // Wired to Select Entered in each portable item's Inspector.
     public void OnPickedUp()
     {
-        // Retrieved copies need no source: the room already remembers the first pickup.
-        if (spawnPoint == null || SystemRelease) return;
+        if (SystemRelease) return;
         foreach (var interactor in grab.interactorsSelecting)
         {
             if (!(interactor is XRBaseInputInteractor)) continue;
-            spawnPoint.MarkAcquired();
+            // This callback follows successful hand selection, never hover or socket installation.
+            if (!grabSoundPlayed)
+            {
+                grabSoundPlayed = true;
+                if (grabAudio != null) grabAudio.Play();
+            }
+            // Retrieved copies have no spawn point, but still receive grab feedback.
+            if (spawnPoint != null) spawnPoint.MarkAcquired();
             return;
         }
     }

@@ -7,11 +7,13 @@ public class ResultScreen : MonoBehaviour
     public TMP_Text lossMessage;
     public TMP_Text completionTime;
     public ParticleSystem celebration;
+    [SerializeField] Color victoryColor = new Color32(255, 207, 102, 255);
 
     public void Show(EndGame.Result result, float elapsedSeconds)
     {
         bool won = result == EndGame.Result.Win;
         title.text = won ? "YOU ESCAPED!" : "TIME'S UP";
+        title.color = won ? victoryColor : lossMessage.color;
         lossMessage.text = "YOU FAILED TO ESCAPE";
         lossMessage.gameObject.SetActive(!won);
         completionTime.gameObject.SetActive(won);

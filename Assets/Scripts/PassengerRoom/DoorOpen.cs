@@ -10,6 +10,7 @@ public class DoorOpen : MonoBehaviour
     private Quaternion openRotation;
     private bool isOpening;
     public bool IsOpen { get; private set; }
+    [SerializeField] AudioSource unlockAudio;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -43,6 +44,8 @@ public class DoorOpen : MonoBehaviour
     [ContextMenu("Open Door")]
     public void Open()
     {
+        // Reuse the opening transition for audio only; keep the existing Open behavior.
+        if (!isOpening && !IsOpen && unlockAudio != null) unlockAudio.Play();
         isOpening = true;
     }
 }

@@ -6,6 +6,7 @@ public class ToolboxSequence : MonoBehaviour
     public ToolboxLever[] levers;
     public int[] order = { 2, 3, 1 };
     public UnityEvent solved;
+    [SerializeField] AudioSource errorAudio;
     public int Progress { get; private set; }
     public bool IsSolved { get; private set; }
 
@@ -20,6 +21,7 @@ public class ToolboxSequence : MonoBehaviour
         {
             Progress = 0;
             foreach (var candidate in levers) candidate.SetPulled(false);
+            if (errorAudio != null) errorAudio.Play();
             return;
         }
 

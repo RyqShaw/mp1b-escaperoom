@@ -9,6 +9,7 @@ public class DrawerOpen : MonoBehaviour
     private Vector3 openPosition;
     private bool isOpening;
     public bool IsOpen { get; private set; }
+    [SerializeField] AudioSource unlockAudio;
 
     void Start()
     {
@@ -36,6 +37,10 @@ public class DrawerOpen : MonoBehaviour
     public void Open()
     {
         if (!IsOpen)
+        {
+            // Only the transition into opening plays feedback; IsOpen still means fully open.
+            if (!isOpening && unlockAudio != null) unlockAudio.Play();
             isOpening = true;
+        }
     }
 }
