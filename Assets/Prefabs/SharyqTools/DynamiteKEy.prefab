@@ -8,17 +8,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 675579124162490875, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2381928185725952024, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.22925222
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2381928185725952024, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00000005750231
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2381928185725952024, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.414804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2381928185725952024, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26,15 +30,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2381928185725952024, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2381928185725952024, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2381928185725952024, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2381928185725952024, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -50,7 +54,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3046016352857881250, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
       propertyPath: m_Name
-      value: Dynamite_Triple Variant
+      value: DynamiteKey
+      objectReference: {fileID: 0}
+    - target: {fileID: 3046016352857881250, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3046016352857881250, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
+      propertyPath: m_TagString
+      value: Dynamite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -62,6 +74,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3046016352857881250, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6624920263377750081}
+    - targetCorrespondingSourceObject: {fileID: 3046016352857881250, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7126671122801028832}
+    - targetCorrespondingSourceObject: {fileID: 3046016352857881250, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4466289635801750591}
     - targetCorrespondingSourceObject: {fileID: 3046016352857881250, guid: 2a0a7812a057f0a44b32fd43e6c37100, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2497122975063821677}
@@ -228,6 +246,32 @@ MonoBehaviour:
   m_LimitAngularVelocity: 0
   m_MaxLinearVelocityDelta: 10
   m_MaxAngularVelocityDelta: 20
+--- !u!114 &7126671122801028832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7153904706819920658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 228dc9033515e5e4e8e88a5135d0533d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GrabOutline
+  outlineMaterial: {fileID: 2100000, guid: 740bbe23f92329943ab221c4c7e4c7cd, type: 2}
+--- !u!114 &4466289635801750591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7153904706819920658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 228dc9033515e5e4e8e88a5135d0533d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GrabOutline
+  outlineMaterial: {fileID: 2100000, guid: 740bbe23f92329943ab221c4c7e4c7cd, type: 2}
 --- !u!114 &2497122975063821677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,3 +284,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a41a9dcec204ea43b88fdaed68bbef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BombKey
+  particles: {fileID: 8551906795925807193, guid: d57fd470a0febf0469374b64c0c89161, type: 3}

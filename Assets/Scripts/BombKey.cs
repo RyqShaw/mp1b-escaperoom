@@ -1,16 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BombKey : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public GameObject particles;
+    public void Explode()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        var inst = Instantiate(particles, transform.position, Quaternion.identity);
+        ParticleSystem[] explosionElements = inst.GetComponentsInChildren<ParticleSystem>();
+        foreach (ParticleSystem p in explosionElements)
+        {
+            p.Play();
+        }
     }
 }

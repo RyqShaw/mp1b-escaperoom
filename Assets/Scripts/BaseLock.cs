@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -5,6 +6,9 @@ public class BaseLock : MonoBehaviour
 {
     public UnityEvent<GameObject> OnUnlock;
     public GameObject keyNeeded;
+    public bool destroyOnUnlock = true;
+    public AudioClip unlockSound;
+    
 
     /// <summary>
     /// Waits for Key needed to be presented to the object
@@ -22,10 +26,11 @@ public class BaseLock : MonoBehaviour
     /// Runs when Key is put on lock
     /// By Default: Destroys Lock; Meant to be Overrided
     /// </summary>
-    void UnlockObstacle(GameObject key)
+    protected virtual void UnlockObstacle(GameObject key)
     {
         OnUnlock.Invoke(key);
         Debug.Log($"{key.name} was used on {gameObject.name}");
-        Destroy(gameObject);
+        if (unlockSound) AudioSource.PlayClipAtPoint(unlockSound, gameObject.transform.position);
+        if (destroyOnUnlock) Destroy(gameObject);
     }
 }
