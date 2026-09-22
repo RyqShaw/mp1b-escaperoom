@@ -25,7 +25,6 @@ public class GrabOutline : MonoBehaviour
 
     void OnEnable()
     {
-
         _grabInteract.hoverEntered.AddListener(OnHoverEntered);
         _grabInteract.hoverExited.AddListener(OnHoverExited);
     }
