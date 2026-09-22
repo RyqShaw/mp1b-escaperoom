@@ -21576,6 +21576,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7683635928644613196}
+  - component: {fileID: 995000000000000102}
   - component: {fileID: 2891288716919010316}
   - component: {fileID: 3861253157790383296}
   m_Layer: 0
@@ -21600,6 +21601,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1353044475205394422}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 180}
+--- !u!114 &995000000000000102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4126450868867938885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc579420c76b422faadf0252f9f37656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PassengerOutline
+  item: {fileID: 0}
+  visualRoot: {fileID: 0}
+  renderers:
+  - {fileID: 3861253157790383296}
+  outlineMaterial: {fileID: 2100000, guid: 090c8f29abf346df87e69dbecd34106c, type: 2}
+  matchingItemId: passenger01.knob
+  drawer: {fileID: 0}
+  door: {fileID: 389082978081564422}
+  grabYellow: {r: 1, g: 0.82, b: 0.02, a: 1}
+  defaultLockColor: {r: 0.65, g: 0.3, b: 1, a: 0.85}
+  activeMatchingColor: {r: 0, g: 1, b: 0.85, a: 1}
+  outlineWidth: 0.004
+  intensity: 1.5
+  fadeDuration: 0.5
 --- !u!33 &2891288716919010316
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -25395,6 +25422,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8100000000000000391}
+  - component: {fileID: 995000000000000103}
   - component: {fileID: 8100000000000000392}
   - component: {fileID: 8100000000000000393}
   - component: {fileID: 8100000000000000394}
@@ -25420,6 +25448,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8100000000000000291}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &995000000000000103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8100000000000000390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc579420c76b422faadf0252f9f37656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PassengerOutline
+  item: {fileID: 0}
+  visualRoot: {fileID: 0}
+  renderers:
+  - {fileID: 8100000000000000393}
+  outlineMaterial: {fileID: 2100000, guid: 090c8f29abf346df87e69dbecd34106c, type: 2}
+  matchingItemId: passenger01.sword
+  drawer: {fileID: 0}
+  door: {fileID: 990000000000006105}
+  grabYellow: {r: 1, g: 0.82, b: 0.02, a: 1}
+  defaultLockColor: {r: 0.65, g: 0.3, b: 1, a: 0.85}
+  activeMatchingColor: {r: 0, g: 1, b: 0.85, a: 1}
+  outlineWidth: 0.004
+  intensity: 1.5
+  fadeDuration: 0.5
 --- !u!33 &8100000000000000392
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -86375,6 +86429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6093110616648668182}
+  - component: {fileID: 995000000000000104}
   m_Layer: 0
   m_Name: PassengerRoom
   m_TagString: Untagged
@@ -86401,6 +86456,39 @@ Transform:
   - {fileID: 5320781060777160001}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &995000000000000104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8804783520812397628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcdfe57509347bc92be19d7cf2a7956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PassengerGroundLine
+  progress: {fileID: 994000000000000020}
+  lineMaterial: {fileID: 2100000, guid: 981e2f630a0045c4848e4db2d3dd7ed0, type: 2}
+  lineColor: {r: 0.2, g: 1, b: 0.35, a: 1}
+  brightness: 2
+  lineWidth: 0.055
+  groundHeightOffset: 0.025
+  initialToolsWaypoints:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 2.65}
+  - {x: 1.3, y: 0, z: 2.65}
+  hintBoardWaypoints:
+  - {x: 1.3, y: 0, z: 2.65}
+  - {x: 0, y: 0, z: 2.65}
+  - {x: 0, y: 0, z: -10.4}
+  - {x: 1.1, y: 0, z: -10.4}
+  luggageDoorWaypoints:
+  - {x: 0, y: 0, z: -10.4}
+  - {x: 0, y: 0, z: 6.65}
+  exitWaypoints:
+  - {x: 0, y: 0, z: 6.65}
+  - {x: 0, y: 0, z: -13.8}
 --- !u!1 &8900000000000000000
 GameObject:
   m_ObjectHideFlags: 0
@@ -94346,6 +94434,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9100000000000000001}
+  - component: {fileID: 995000000000000101}
   m_Layer: 0
   m_Name: SeatPuzzle
   m_TagString: Untagged
@@ -94369,6 +94458,59 @@ Transform:
   - {fileID: 8400000000000001971}
   m_Father: {fileID: 8400000000000000091}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &995000000000000101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9100000000000000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc579420c76b422faadf0252f9f37656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PassengerOutline
+  item: {fileID: 0}
+  visualRoot: {fileID: 0}
+  renderers:
+  - {fileID: 8400000000000001763}
+  - {fileID: 8700000000000000044}
+  - {fileID: 8700000000000001044}
+  - {fileID: 8700000000000002044}
+  - {fileID: 8700000000000003044}
+  - {fileID: 8700000000000004044}
+  - {fileID: 8700000000000005044}
+  - {fileID: 8700000000000006044}
+  - {fileID: 8700000000000007044}
+  - {fileID: 8700000000000008044}
+  - {fileID: 8700000000000010044}
+  - {fileID: 8700000000000011044}
+  - {fileID: 8700000000000012044}
+  - {fileID: 8700000000000013044}
+  - {fileID: 8700000000000014044}
+  - {fileID: 8700000000000015044}
+  - {fileID: 8700000000000016044}
+  - {fileID: 8700000000000017044}
+  - {fileID: 8700000000000018044}
+  - {fileID: 8700000000000019044}
+  - {fileID: 8700000000000020044}
+  - {fileID: 8700000000000021044}
+  - {fileID: 8700000000000022044}
+  - {fileID: 8700000000000023044}
+  - {fileID: 8900000000000000412}
+  - {fileID: 8900000000000000562}
+  - {fileID: 8900000000000000712}
+  - {fileID: 8900000000000000862}
+  outlineMaterial: {fileID: 2100000, guid: 090c8f29abf346df87e69dbecd34106c, type: 2}
+  matchingItemId: passenger01.wrench
+  drawer: {fileID: 4783791395803469067}
+  door: {fileID: 0}
+  grabYellow: {r: 1, g: 0.82, b: 0.02, a: 1}
+  defaultLockColor: {r: 0.65, g: 0.3, b: 1, a: 0.85}
+  activeMatchingColor: {r: 0, g: 1, b: 0.85, a: 1}
+  outlineWidth: 0.004
+  intensity: 1.5
+  fadeDuration: 0.5
 --- !u!1 &9100000000000000002
 GameObject:
   m_ObjectHideFlags: 0
