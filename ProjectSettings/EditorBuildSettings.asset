@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SharyqWorkingScene.unity
     guid: e037ec1935288574c95b31f9c62e6e07
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: f03d54ecd927a464c965aa14feb48df6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a26a338cbd54fd24a9cd3a733a8e2d96, type: 2}
