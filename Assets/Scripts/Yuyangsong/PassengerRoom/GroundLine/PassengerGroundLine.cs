@@ -39,8 +39,7 @@ public class PassengerGroundLine : MonoBehaviour
     {
         if (progress == null || lineMaterial == null) { line.enabled = false; return; }
         bool complete = progress.toolbox.IsSolved && progress.emergencyBox.IsOpen &&
-            progress.sword.HasBeenAcquired && progress.spray.HasBeenAcquired &&
-            progress.screwdriver.HasBeenAcquired;
+            progress.sword.HasBeenAcquired && progress.spray.HasBeenAcquired;
         Vector3[] points;
         if (complete) points = exitWaypoints;
         else if (progress.luggageDoor.IsOpen) points = null; // Internal exploration: no line.

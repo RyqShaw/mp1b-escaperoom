@@ -718,7 +718,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Chicago CTA Simulator
 
-    Walk into the Train To Begin '
+    Walk into the Train To Begin
+
+    Look Out
+    for Collectable Art Pieces being Transported! '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -784,7 +787,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -338.5987, y: 0, z: -429.01492, w: 0}
+  m_margin: {x: -132.3509, y: 0, z: -214.12567, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1224,6 +1227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fedf113a5527f5f4b9ddb9470c97dc42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  scene: GameScene
 --- !u!65 &1012539108
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1798,7 +1802,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1790457192
@@ -2121,7 +2125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 121966244894937971, guid: cc13e964c46600342be2f737c0aca216, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.95
+      value: 2.2
       objectReference: {fileID: 0}
     - target: {fileID: 121966244894937971, guid: cc13e964c46600342be2f737c0aca216, type: 3}
       propertyPath: m_LocalPosition.z

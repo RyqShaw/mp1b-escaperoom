@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4955365365316411297}
   - component: {fileID: 3468446130011566743}
   - component: {fileID: 4921169477614608428}
+  - component: {fileID: 4772828873398987725}
   m_Layer: 0
   m_Name: Collectable
   m_TagString: Untagged
@@ -285,3 +286,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GrabOutline
   outlineMaterial: {fileID: 2100000, guid: 740bbe23f92329943ab221c4c7e4c7cd, type: 2}
+--- !u!114 &4772828873398987725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3573514444863499505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e5576824f126f46b3907959e8756d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Collectable
+  p: {fileID: 3870820073768324627, guid: fbf33d24611027041a27e8807bff0859, type: 3}
