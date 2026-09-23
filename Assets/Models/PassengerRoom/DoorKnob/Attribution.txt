@@ -1,0 +1,3 @@
+"Simple Door Knob" (https://skfb.ly/6AwZt) by Blender3D is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+Modifications: separated Base and Knob; removed armature and animation; adjusted origin and scale for Unity; replaced original materials with Unity URP's default Lit material.

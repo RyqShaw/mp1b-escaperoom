@@ -1,0 +1,3 @@
+"Tools / T Head Wrench Tool" (https://skfb.ly/oxuNs) by ROY is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+Modifications: Resized, applied rotation and scale, renamed, and exported from Blender to FBX for use in Unity.
