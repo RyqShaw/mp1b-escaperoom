@@ -72,9 +72,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6207194393823060044, guid: 537ab85af9f24fe42aeca34f12e70e40, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5361967555810836071}
-    - targetCorrespondingSourceObject: {fileID: 6207194393823060044, guid: 537ab85af9f24fe42aeca34f12e70e40, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2221991853822437467}
   m_SourcePrefab: {fileID: 100100000, guid: 537ab85af9f24fe42aeca34f12e70e40, type: 3}
 --- !u!1 &5480028011625465972 stripped
 GameObject:
@@ -168,7 +165,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2221991853822437467}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InventoryItem, Assembly-CSharp
         m_MethodName: OnPickedUp
         m_Mode: 1
@@ -203,7 +200,7 @@ MonoBehaviour:
       m_Calls: []
   m_StartingHoverFilters: []
   m_StartingSelectFilters:
-  - {fileID: 2221991853822437467}
+  - {fileID: 0}
   m_StartingInteractionStrengthFilters: []
   m_AutoFindParentInteractableInHierarchy: 0
   m_ParentInteractableObject: {fileID: 0}
@@ -276,21 +273,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GrabOutline
   outlineMaterial: {fileID: 2100000, guid: 740bbe23f92329943ab221c4c7e4c7cd, type: 2}
---- !u!114 &2221991853822437467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5480028011625465972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f367c4fb8224082a86a89a92dd4bca9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
-  displayName: Screwdriver key
-  allowStorage: 1
-  stateJson: '{}'
-  grab: {fileID: 7248417973759618794}
-  storageRules: []
-  grabAudio: {fileID: 0}
