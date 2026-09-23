@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b01d1c84f3282d04da0cd4c9258a7962
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 304155
+  packageName: Hand Mirror
+  packageVersion: 1.0
+  assetPath: Assets/HandMirror/Scenes/SampleScene.unity
+  uploadId: 718669
