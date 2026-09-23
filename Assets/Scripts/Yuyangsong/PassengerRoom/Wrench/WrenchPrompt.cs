@@ -4,6 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class WrenchPrompt : MonoBehaviour
 {
+    public PassengerTriggerTarget triggerTarget;
     public XRGrabInteractable wrench;
     public WrenchAimInstall installation;
     public WrenchSocketFilter socketFilter;
@@ -24,7 +25,7 @@ public class WrenchPrompt : MonoBehaviour
             return;
         }
 
-        bool playerHovering = false;
+        bool playerHovering = triggerTarget != null && triggerTarget.IsPointedAt;
         foreach (var interactor in wrench.interactorsHovering)
         {
             if (!(interactor is XRSocketInteractor))
@@ -45,10 +46,10 @@ public class WrenchPrompt : MonoBehaviour
         {
             if (installation.IsHeld)
                 message = installation.IsAiming
-                    ? "Press Grip again to fit the wrench"
+                    ? (installation.WaitingForGrip ? "Hold then release Grip to fit the wrench" : "Release Grip to fit the wrench")
                     : "Point at the correct drawer fitting";
             else if (playerHovering)
-                message = "Press Grip to pick up the wrench";
+                message = "Hold Grip to pick up the wrench";
         }
         else if (drawer.IsOpen)
         {

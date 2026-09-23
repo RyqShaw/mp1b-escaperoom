@@ -18,10 +18,16 @@ public class SwordAimInstall : MonoBehaviour
     public bool IsHeld => socketFilter != null && item.Grab.isSelected && !item.Installed &&
         !item.SystemRelease && !IsInstalling && !(item.Grab.firstInteractorSelecting is XRSocketInteractor);
 
+    Transform AimOrigin(IXRSelectInteractor hand) =>
+        item.Inventory != null ? item.Inventory.AimOrigin(hand) : null;
+
+    public bool WaitingForGrip => item.Inventory != null &&
+        item.Inventory.WaitingForGrip(item.Grab.firstInteractorSelecting);
+
     void Update()
     {
         IsAiming = !InventoryController.BlocksWorld && IsHeld &&
-            InstallationRay.Hits(item.Grab.firstInteractorSelecting, item.transform, target, maxDistance);
+            InstallationRay.Hits(AimOrigin(item.Grab.firstInteractorSelecting), item.transform, target, maxDistance);
         if (preview != null) preview.SetActive(IsAiming);
     }
 
@@ -32,7 +38,7 @@ public class SwordAimInstall : MonoBehaviour
             InventoryController.BlocksWorld || toolTip == null || socketFilter == null ||
             !socketFilter.isActiveAndEnabled || args.interactorObject is XRSocketInteractor) return;
         // Do not install from a stale preview, or from the inventory's system release.
-        if (!InstallationRay.Hits(args.interactorObject, item.transform, target, maxDistance)) return;
+        if (!InstallationRay.Hits(AimOrigin(args.interactorObject), item.transform, target, maxDistance)) return;
         IsInstalling = true;
         IsAiming = false;
         if (preview != null) preview.SetActive(false);

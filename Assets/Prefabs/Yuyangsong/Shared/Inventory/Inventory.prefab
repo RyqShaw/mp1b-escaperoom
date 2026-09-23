@@ -51,6 +51,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryController
   leftHand: {fileID: 0}
   rightHand: {fileID: 0}
+  leftAimOrigin: {fileID: 0}
+  rightAimOrigin: {fileID: 0}
   toggleAction: {fileID: 11400000, guid: aa972ffbd6124401b422e03480a4f7cb, type: 2}
   leftClickAction: {fileID: 11400000, guid: 6c8a04d9859d4ab6b97c08904ab039ee, type: 2}
   rightClickAction: {fileID: 11400000, guid: 421545be95764852a0669b419813e58d, type: 2}
@@ -4651,10 +4653,10 @@ MonoBehaviour:
   - {fileID: 980000000000000171}
   - {fileID: 980000000000000180}
   left:
-    worldVisual: {fileID: 0}
+    aimOrigin: {fileID: 0}
     menuLine: {fileID: 980000000000002003}
   right:
-    worldVisual: {fileID: 0}
+    aimOrigin: {fileID: 0}
     menuLine: {fileID: 980000000000002013}
   maxDistance: 5
 --- !u!1 &980000000000000001

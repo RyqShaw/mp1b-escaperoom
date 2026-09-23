@@ -30,6 +30,12 @@ public class ToolboxLever : MonoBehaviour, IXRSelectFilter
     {
         if (InventoryController.BlocksWorld) return;
         if (args.interactorObject is XRBaseInteractor hand && hand.hasSelection) return;
+        UseFromPointer();
+    }
+
+    public void UseFromPointer()
+    {
+        if (!isActiveAndEnabled || InventoryController.BlocksWorld || sequence == null) return;
         sequence.Press(this);
     }
 

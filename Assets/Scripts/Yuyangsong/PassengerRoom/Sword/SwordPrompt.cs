@@ -3,6 +3,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class SwordPrompt : MonoBehaviour
 {
+    public PassengerTriggerTarget triggerTarget;
     public InventoryItem item;
     public SwordItemInteraction interaction;
     public SwordAimInstall installation;
@@ -21,7 +22,7 @@ public class SwordPrompt : MonoBehaviour
             return;
         }
 
-        bool playerHovering = false;
+        bool playerHovering = triggerTarget != null && triggerTarget.IsPointedAt;
         foreach (var interactor in item.Grab.interactorsHovering)
             if (!(interactor is XRSocketInteractor)) { playerHovering = true; break; }
 
@@ -36,9 +37,9 @@ public class SwordPrompt : MonoBehaviour
         {
             if (item.Grab.isSelected)
                 message = installation.IsAiming
-                    ? "Press Grip again to fit the sword" : "Point at the cabinet fitting";
+                    ? (installation.WaitingForGrip ? "Hold then release Grip to fit the sword" : "Release Grip to fit the sword") : "Point at the cabinet fitting";
             else if (playerHovering)
-                message = "Press Grip to pick up the sword";
+                message = "Hold Grip to pick up the sword";
         }
         else if (complete)
         {

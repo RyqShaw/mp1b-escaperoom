@@ -5,6 +5,7 @@ public class InteractionHUD : MonoBehaviour
 {
     public static InteractionHUD Instance { get; private set; }
 
+    public Transform playerCamera;
     public GameObject panel;
     public TMP_Text messageText;
     public Vector3 cameraOffset = new Vector3(0f, 0.22f, 1.2f);
@@ -24,16 +25,15 @@ public class InteractionHUD : MonoBehaviour
 
     void Start()
     {
-        Camera playerCamera = Camera.main;
         if (playerCamera == null)
         {
-            Debug.LogError("InteractionHUD needs a camera tagged MainCamera.", this);
+            Debug.LogError("Assign the player camera to InteractionHUD.", this);
             gameObject.SetActive(false);
             return;
         }
 
         // Follow the camera through parenting, rather than moving the HUD every frame.
-        transform.SetParent(playerCamera.transform, false);
+        transform.SetParent(playerCamera, false);
         transform.localPosition = cameraOffset;
         transform.localRotation = Quaternion.identity;
         transform.localScale = Vector3.one;

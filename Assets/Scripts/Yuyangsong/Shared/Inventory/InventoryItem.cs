@@ -31,6 +31,7 @@ public class InventoryItem : MonoBehaviour, IXRSelectFilter
     public string TargetId { get; private set; }
     public InventoryItem Prefab { get; private set; }
     public XRGrabInteractable Grab => grab;
+    public InventoryController Inventory { get; private set; }
     public bool SystemRelease { get; set; }
     public bool Installed { get; private set; }
     public ItemTarget Target => ItemTarget.Find(TargetId);
@@ -46,9 +47,10 @@ public class InventoryItem : MonoBehaviour, IXRSelectFilter
         }
     }
 
-    public void Initialize(string id, string targetId, InventoryItem prefab, string state = "{}",
+    public void Initialize(string id, string targetId, InventoryItem prefab, InventoryController inventory, string state = "{}",
         ItemSpawnPoint source = null)
     {
+        Inventory = inventory;
         ItemId = id;
         TargetId = targetId;
         Prefab = prefab;

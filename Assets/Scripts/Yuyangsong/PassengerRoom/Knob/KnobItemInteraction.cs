@@ -41,6 +41,13 @@ public class KnobItemInteraction : MonoBehaviour, IInventoryStorageRule, IXRSele
     {
         if (InventoryController.BlocksWorld || !item.Installed || target == null) return;
         if (args.interactorObject is XRBaseInteractor hand && hand.hasSelection) return;
+        UseFromPointer();
+    }
+
+    public void UseFromPointer()
+    {
+        if (!isActiveAndEnabled || InventoryController.BlocksWorld || item.SystemRelease ||
+            !item.Installed || target == null) return;
         turn.Turn();
     }
 }

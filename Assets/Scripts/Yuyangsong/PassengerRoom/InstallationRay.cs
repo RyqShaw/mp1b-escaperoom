@@ -1,18 +1,12 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 // Shared aiming rules for all three keys; each item keeps its own installation component.
 public static class InstallationRay
 {
-    public static bool Hits(IXRSelectInteractor hand, Transform item, Collider target, float maxDistance)
+    public static bool Hits(Transform origin, Transform item, Collider target, float maxDistance)
     {
-        if (hand == null || target == null || !target.enabled || !target.gameObject.activeInHierarchy) return false;
-        Transform origin = hand.transform;
-        if (hand is NearFarInteractor nearFar && nearFar.farInteractionCaster != null)
-            origin = nearFar.farInteractionCaster.effectiveCastOrigin;
-        else if (hand is XRRayInteractor ray && ray.rayOriginTransform != null)
-            origin = ray.rayOriginTransform;
-        if (origin == null) return false;
+        if (origin == null || !origin.gameObject.activeInHierarchy || target == null ||
+            !target.enabled || !target.gameObject.activeInHierarchy) return false;
 
         Collider nearest = null;
         float nearestDistance = maxDistance;
@@ -20,7 +14,7 @@ public static class InstallationRay
             maxDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Collide))
         {
             if (hit.collider.transform.IsChildOf(item)) continue;
-            if (hit.collider is CharacterController && hand.transform.IsChildOf(hit.collider.transform)) continue;
+            if (hit.collider is CharacterController && origin.IsChildOf(hit.collider.transform)) continue;
             if (hit.collider.isTrigger && hit.collider != target) continue;
             if (hit.distance >= nearestDistance) continue;
             nearest = hit.collider;

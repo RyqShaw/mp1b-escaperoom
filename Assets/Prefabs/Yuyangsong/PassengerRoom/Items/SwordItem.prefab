@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 990000000000003002}
   - component: {fileID: 990000000000003003}
   - component: {fileID: 991000000000000003}
+  - component: {fileID: 994000000000100001}
   m_Layer: 0
   m_Name: SwordItem
   m_TagString: Untagged
@@ -344,6 +345,7 @@ MonoBehaviour:
   installation: {fileID: 991000000000000003}
   socketFilter: {fileID: 0}
   turn: {fileID: 0}
+  triggerTarget: {fileID: 994000000000100001}
 --- !u!114 &991000000000000003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,3 +578,34 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &994000000000100001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030204739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26866c68e2c047ceab739068f9c3fd8a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PassengerTriggerTarget
+  inventory: {fileID: 0}
+  item: {fileID: 2030204742}
+  interactable: {fileID: 2030204743}
+  maxDistance: 10
+  use:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 990000000000003002}
+        m_TargetAssemblyTypeName: SwordItemInteraction, Assembly-CSharp
+        m_MethodName: UseFromPointer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument:
+          m_BoolArgument: 0
+        m_CallState: 2

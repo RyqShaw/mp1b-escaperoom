@@ -27388,6 +27388,7 @@ GameObject:
   - component: {fileID: 8100000000000000541}
   - component: {fileID: 990000000000005102}
   - component: {fileID: 990000000000005103}
+  - component: {fileID: 994000000000100011}
   m_Layer: 0
   m_Name: Lever_1
   m_TagString: Untagged
@@ -27843,6 +27844,7 @@ GameObject:
   - component: {fileID: 8100000000000000581}
   - component: {fileID: 990000000000005202}
   - component: {fileID: 990000000000005203}
+  - component: {fileID: 994000000000100012}
   m_Layer: 0
   m_Name: Lever_2
   m_TagString: Untagged
@@ -28389,6 +28391,7 @@ GameObject:
   - component: {fileID: 8100000000000000631}
   - component: {fileID: 990000000000005302}
   - component: {fileID: 990000000000005303}
+  - component: {fileID: 994000000000100013}
   m_Layer: 0
   m_Name: Lever_3
   m_TagString: Untagged
@@ -98176,3 +98179,96 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f7f8d2f4542b17945b2ede164996cb71, type: 3}
   m_PrefabInstance: {fileID: 993000000000000010}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &994000000000100011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8100000000000000540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26866c68e2c047ceab739068f9c3fd8a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PassengerTriggerTarget
+  inventory: {fileID: 0}
+  item: {fileID: 0}
+  interactable: {fileID: 990000000000005103}
+  maxDistance: 10
+  use:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 990000000000005102}
+        m_TargetAssemblyTypeName: ToolboxLever, Assembly-CSharp
+        m_MethodName: UseFromPointer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument:
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &994000000000100012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8100000000000000580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26866c68e2c047ceab739068f9c3fd8a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PassengerTriggerTarget
+  inventory: {fileID: 0}
+  item: {fileID: 0}
+  interactable: {fileID: 990000000000005203}
+  maxDistance: 10
+  use:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 990000000000005202}
+        m_TargetAssemblyTypeName: ToolboxLever, Assembly-CSharp
+        m_MethodName: UseFromPointer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument:
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &994000000000100013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8100000000000000630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26866c68e2c047ceab739068f9c3fd8a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PassengerTriggerTarget
+  inventory: {fileID: 0}
+  item: {fileID: 0}
+  interactable: {fileID: 990000000000005303}
+  maxDistance: 10
+  use:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 990000000000005302}
+        m_TargetAssemblyTypeName: ToolboxLever, Assembly-CSharp
+        m_MethodName: UseFromPointer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument:
+          m_BoolArgument: 0
+        m_CallState: 2

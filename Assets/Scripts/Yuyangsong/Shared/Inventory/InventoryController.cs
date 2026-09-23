@@ -1,13 +1,15 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
+using UnityEngine.XR.Interaction.Toolkit.Filtering;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 [DefaultExecutionOrder(-110)]
-public class InventoryController : MonoBehaviour
+public class InventoryController : MonoBehaviour, IXRSelectFilter
 {
     [Serializable]
     public class Entry
@@ -19,6 +21,7 @@ public class InventoryController : MonoBehaviour
     [Header("Assign in the scene Inspector")]
     public XRBaseInputInteractor leftHand;
     public XRBaseInputInteractor rightHand;
+    public Transform leftAimOrigin, rightAimOrigin;
     public InputActionReference toggleAction;
     public InputActionReference leftClickAction, rightClickAction;
     public InventoryPanel panel;
@@ -32,12 +35,17 @@ public class InventoryController : MonoBehaviour
     readonly List<Entry> entries = new List<Entry>();
     readonly HashSet<string> spawned = new HashSet<string>();
     readonly Dictionary<string, InventoryItem> live = new Dictionary<string, InventoryItem>();
-    readonly XRInputButtonReader blockedGrip = new XRInputButtonReader(inputSourceMode: XRInputButtonReader.InputSourceMode.Unused);
-    IXRInputButtonReader leftGripBeforeMenu, rightGripBeforeMenu;
-    bool leftActivateBeforeMenu, rightActivateBeforeMenu;
+    readonly XRInputButtonReader blockedActivate = new XRInputButtonReader(inputSourceMode: XRInputButtonReader.InputSourceMode.Unused);
+    InventoryGripInput leftGrip, rightGrip;
+    IXRInputButtonReader leftActivateBeforeMenu, rightActivateBeforeMenu;
     bool inputsBlocked, waitForTriggerRelease;
     int lastTransactionFrame = -1, lastToggleFrame = -1;
     InventoryItem retrieving;
+    InventoryItem pendingRetrieve;
+    XRBaseInputInteractor pendingHand;
+
+    internal bool InputsBlocked => inputsBlocked;
+    public bool canProcess => isActiveAndEnabled;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void ResetInstance() { Instance = null; }
@@ -54,13 +62,19 @@ public class InventoryController : MonoBehaviour
 
     void OnEnable()
     {
-        if (leftHand == null || rightHand == null || panel == null || toggleAction == null || toggleAction.action == null ||
+        if (leftHand == null || rightHand == null || leftAimOrigin == null || rightAimOrigin == null || panel == null || toggleAction == null || toggleAction.action == null ||
             leftClickAction == null || leftClickAction.action == null || rightClickAction == null || rightClickAction.action == null)
         {
-            Debug.LogError("Assign inventory hands, Toggle and both Click actions, and the panel in the Inspector.", this);
+            Debug.LogError("Assign inventory hands, aim origins, Toggle and both Click actions, and the panel in the Inspector.", this);
             enabled = false;
             return;
         }
+        leftGrip = new InventoryGripInput(this, leftHand);
+        rightGrip = new InventoryGripInput(this, rightHand);
+        leftHand.selectInput.bypass = leftGrip;
+        rightHand.selectInput.bypass = rightGrip;
+        leftHand.selectFilters.Add(this);
+        rightHand.selectFilters.Add(this);
         toggleAction.action.Enable();
         leftClickAction.action.Enable();
         rightClickAction.action.Enable();
@@ -90,25 +104,45 @@ public class InventoryController : MonoBehaviour
     void SetInputsBlocked(bool blocked)
     {
         if (inputsBlocked == blocked) return;
-        inputsBlocked = blocked;
         if (blocked)
         {
-            leftGripBeforeMenu = leftHand.selectInput.bypass;
-            rightGripBeforeMenu = rightHand.selectInput.bypass;
-            leftActivateBeforeMenu = leftHand.allowActivate;
-            rightActivateBeforeMenu = rightHand.allowActivate;
+            leftGrip?.RememberSelection();
+            rightGrip?.RememberSelection();
+            leftActivateBeforeMenu = leftHand.activateInput.bypass;
+            rightActivateBeforeMenu = rightHand.activateInput.bypass;
+            leftHand.activateInput.bypass = blockedActivate;
+            rightHand.activateInput.bypass = blockedActivate;
         }
-        // Toggle keeps the existing hold while the menu ignores new Grip presses.
-        if (leftHand != null)
+        else
         {
-            leftHand.selectInput.bypass = blocked ? blockedGrip : leftGripBeforeMenu;
-            leftHand.allowActivate = !blocked && leftActivateBeforeMenu;
+            if (leftHand != null && leftHand.activateInput.bypass == blockedActivate)
+                leftHand.activateInput.bypass = leftActivateBeforeMenu;
+            if (rightHand != null && rightHand.activateInput.bypass == blockedActivate)
+                rightHand.activateInput.bypass = rightActivateBeforeMenu;
         }
-        if (rightHand != null)
-        {
-            rightHand.selectInput.bypass = blocked ? blockedGrip : rightGripBeforeMenu;
-            rightHand.allowActivate = !blocked && rightActivateBeforeMenu;
-        }
+        inputsBlocked = blocked;
+    }
+
+    // This filter also protects team props, which do not have InventoryItem.
+    public bool Process(IXRSelectInteractor interactor, IXRSelectInteractable interactable)
+    {
+        if (!inputsBlocked) return true;
+        if (interactor.interactablesSelected.Contains(interactable)) return true;
+        return retrieving != null && ReferenceEquals(interactable, retrieving.Grab) && ReferenceEquals(interactor, pendingHand);
+    }
+
+    public Transform AimOrigin(IXRSelectInteractor hand)
+    {
+        if (ReferenceEquals(hand, leftHand)) return leftAimOrigin;
+        if (ReferenceEquals(hand, rightHand)) return rightAimOrigin;
+        return null;
+    }
+
+    public bool WaitingForGrip(IXRSelectInteractor hand)
+    {
+        if (ReferenceEquals(hand, leftHand)) return leftGrip != null && leftGrip.WaitingForGrip;
+        if (ReferenceEquals(hand, rightHand)) return rightGrip != null && rightGrip.WaitingForGrip;
+        return false;
     }
 
     public InventoryItem Held(bool left)
@@ -136,7 +170,7 @@ public class InventoryController : MonoBehaviour
         }
         if (!spawned.Add(point.itemId)) return;
         var item = Instantiate(point.prefab, point.transform.position, point.transform.rotation);
-        item.Initialize(point.itemId, point.targetId, point.prefab, source: point);
+        item.Initialize(point.itemId, point.targetId, point.prefab, this, source: point);
         live.Add(point.itemId, item);
     }
 
@@ -177,7 +211,7 @@ public class InventoryController : MonoBehaviour
     {
         if (!BeginTransaction()) return;
         var hand = left ? leftHand : rightHand;
-        if (hand == null || !hand.isActiveAndEnabled) { Feedback = "That hand is not connected."; return; }
+        if (hand == null || !hand.isActiveAndEnabled || hand.interactionManager == null) { Feedback = "That hand is not connected."; return; }
         if (hand.hasSelection) { Feedback = "Empty that hand before taking an item."; return; }
         var entry = entries.Find(e => e.id == id);
         if (entry == null || entry.prefab == null) { Feedback = "Select an available item first."; return; }
@@ -186,8 +220,11 @@ public class InventoryController : MonoBehaviour
             Feedback = "This item already exists in the room.";
             return;
         }
-        var item = Instantiate(entry.prefab, hand.transform.position, hand.transform.rotation);
-        item.Initialize(entry.id, entry.targetId, entry.prefab, entry.state);
+        var attach = hand.GetAttachTransform(entry.prefab.Grab);
+        var item = Instantiate(entry.prefab, attach.position, attach.rotation);
+        item.Initialize(entry.id, entry.targetId, entry.prefab, this, entry.state);
+        pendingRetrieve = item;
+        pendingHand = hand;
         // Allow only this item through the menu's selection filter during handover.
         retrieving = item;
         try
@@ -197,15 +234,46 @@ public class InventoryController : MonoBehaviour
         finally { retrieving = null; }
         if (!hand.IsSelecting(item.Grab))
         {
-            item.SystemRelease = true;
-            item.gameObject.SetActive(false);
-            Destroy(item.gameObject);
+            CancelRetrieve();
             Feedback = "Could not hand over the item. It remains in inventory.";
             return;
         }
-        live[id] = item;
+        (left ? leftGrip : rightGrip).RememberSelection();
+        Feedback = "Taking " + entry.displayName + "...";
+        StartCoroutine(ConfirmRetrieve(entry));
+    }
+
+    IEnumerator ConfirmRetrieve(Entry entry)
+    {
+        // Verify after an interaction update, before removing the inventory entry.
+        yield return null;
+        if (pendingRetrieve == null || pendingHand == null || !pendingHand.isActiveAndEnabled ||
+            !pendingHand.IsSelecting(pendingRetrieve.Grab))
+        {
+            CancelRetrieve();
+            Feedback = "Could not keep the item in hand. It remains in inventory.";
+            yield break;
+        }
+        live[entry.id] = pendingRetrieve;
         entries.Remove(entry);
-        Feedback = "Taken " + entry.displayName + ". Close inventory; Grip releases it.";
+        pendingRetrieve = null;
+        pendingHand = null;
+        Feedback = "Taken " + entry.displayName + ". Close inventory; hold Grip, then release to let go.";
+    }
+
+    void CancelRetrieve()
+    {
+        if (pendingRetrieve != null)
+        {
+            pendingRetrieve.SystemRelease = true;
+            if (pendingHand != null && pendingHand.interactionManager != null &&
+                pendingHand.IsSelecting(pendingRetrieve.Grab))
+                pendingHand.interactionManager.SelectExit((IXRSelectInteractor)pendingHand, (IXRSelectInteractable)pendingRetrieve.Grab);
+            pendingRetrieve.gameObject.SetActive(false);
+            Destroy(pendingRetrieve.gameObject);
+        }
+        pendingRetrieve = null;
+        pendingHand = null;
     }
 
     public bool IsRetrieving(InventoryItem item) => retrieving == item;
@@ -213,7 +281,7 @@ public class InventoryController : MonoBehaviour
     bool BeginTransaction()
     {
         // Also blocks a second hand or a callback from repeating a transaction this frame.
-        if (!IsOpen || lastTransactionFrame == Time.frameCount) return false;
+        if (!IsOpen || pendingRetrieve != null || lastTransactionFrame == Time.frameCount) return false;
         lastTransactionFrame = Time.frameCount;
         return true;
     }
@@ -224,9 +292,23 @@ public class InventoryController : MonoBehaviour
         if (toggleAction != null) toggleAction.action.Disable();
         if (leftClickAction != null) leftClickAction.action.Disable();
         if (rightClickAction != null) rightClickAction.action.Disable();
+        StopAllCoroutines();
+        CancelRetrieve();
         IsOpen = false;
         waitForTriggerRelease = false;
         SetInputsBlocked(false);
+        if (leftHand != null)
+        {
+            leftHand.selectFilters.Remove(this);
+            if (leftGrip != null && leftHand.selectInput.bypass == leftGrip)
+                leftHand.selectInput.bypass = leftGrip.Previous;
+        }
+        if (rightHand != null)
+        {
+            rightHand.selectFilters.Remove(this);
+            if (rightGrip != null && rightHand.selectInput.bypass == rightGrip)
+                rightHand.selectInput.bypass = rightGrip.Previous;
+        }
         if (panel != null) panel.SetVisible(false);
     }
 

@@ -42,6 +42,13 @@ public class WrenchItemInteraction : MonoBehaviour, IInventoryStorageRule, IXRSe
     {
         if (InventoryController.BlocksWorld || !item.Installed || target == null) return;
         if (args.interactorObject is XRBaseInteractor hand && hand.hasSelection) return;
+        UseFromPointer();
+    }
+
+    public void UseFromPointer()
+    {
+        if (!isActiveAndEnabled || InventoryController.BlocksWorld || item.SystemRelease ||
+            !item.Installed || target == null) return;
         target.turn.Turn();
     }
 }

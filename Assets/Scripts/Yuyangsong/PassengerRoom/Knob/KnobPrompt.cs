@@ -4,6 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class KnobPrompt : MonoBehaviour
 {
+    public PassengerTriggerTarget triggerTarget;
     public XRGrabInteractable knob;
     public KnobSocketFilter socketFilter;
     public KnobTurn knobTurn;
@@ -25,7 +26,7 @@ public class KnobPrompt : MonoBehaviour
             return;
         }
 
-        bool playerHovering = false;
+        bool playerHovering = triggerTarget != null && triggerTarget.IsPointedAt;
         foreach (var interactor in knob.interactorsHovering)
         {
             if (!(interactor is XRSocketInteractor))
@@ -51,12 +52,12 @@ public class KnobPrompt : MonoBehaviour
             if (installation.IsHeld)
             {
                 message = installation.IsAiming
-                    ? "Press Grip again to fit the knob"
+                    ? (installation.WaitingForGrip ? "Hold then release Grip to fit the knob" : "Release Grip to fit the knob")
                     : "Point at the door fitting";
             }
             else if (playerHovering)
             {
-                message = "Press Grip to pick up the knob";
+                message = "Hold Grip to pick up the knob";
             }
         }
         else if (knobTurn.IsComplete)

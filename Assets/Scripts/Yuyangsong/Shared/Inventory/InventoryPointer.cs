@@ -1,18 +1,16 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals;
 
-// Menu rays and button tests share one path. The room's curve can snap to held objects.
+// Menu rays and button tests use the same explicitly assigned aim origin.
 [DefaultExecutionOrder(10)]
 public class InventoryPointer : MonoBehaviour
 {
     [Serializable]
     public class HandPointer
     {
-        public CurveVisualController worldVisual;
+        public Transform aimOrigin;
         public LineRenderer menuLine;
-        [NonSerialized] public bool worldWasActive;
     }
 
     public InventoryController inventory;
@@ -41,8 +39,8 @@ public class InventoryPointer : MonoBehaviour
 
     Button Aim(HandPointer hand)
     {
-        Transform origin = hand.worldVisual.lineOriginTransform;
-        hand.menuLine.enabled = origin.gameObject.activeInHierarchy;
+        Transform origin = hand.aimOrigin;
+        hand.menuLine.enabled = origin != null && origin.gameObject.activeInHierarchy;
         if (!hand.menuLine.enabled) return null;
         var ray = new Ray(origin.position, origin.forward);
         var plane = new Plane(panel.panelRoot.forward, panel.panelRoot.position);
@@ -96,9 +94,7 @@ public class InventoryPointer : MonoBehaviour
 
     static void SetHandVisible(HandPointer hand, bool visible)
     {
-        if (visible) hand.worldWasActive = hand.worldVisual.gameObject.activeSelf;
-        hand.worldVisual.gameObject.SetActive(visible ? false : hand.worldWasActive);
-        hand.menuLine.enabled = visible;
+        if (hand != null && hand.menuLine != null) hand.menuLine.enabled = visible;
     }
 
     void OnDisable() { SetMenuRays(false); }

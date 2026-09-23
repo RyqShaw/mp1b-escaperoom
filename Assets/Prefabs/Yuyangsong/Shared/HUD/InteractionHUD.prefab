@@ -48,6 +48,7 @@ MonoBehaviour:
   panel: {fileID: 9200000000000000000}
   messageText: {fileID: 9200000000000000023}
   cameraOffset: {x: 0, y: 0.22, z: 1.2}
+  playerCamera: {fileID: 0}
 --- !u!1 &9200000000000000000
 GameObject:
   m_ObjectHideFlags: 0
