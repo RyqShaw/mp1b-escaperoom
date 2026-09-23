@@ -20,6 +20,7 @@ public class ExplosionLock : BaseLock
         if (bomb)
         {
             bomb.Explode();
+            if (unlockSound) AudioSource.PlayClipAtPoint(unlockSound, gameObject.transform.position);
             Destroy(key);
             Destroy(gameObject);
         }
