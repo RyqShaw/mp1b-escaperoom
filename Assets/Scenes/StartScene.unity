@@ -1226,7 +1226,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fedf113a5527f5f4b9ddb9470c97dc42, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::StartGame
   scene: GameScene
 --- !u!65 &1012539108
 BoxCollider:

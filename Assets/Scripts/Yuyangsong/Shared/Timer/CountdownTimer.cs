@@ -30,9 +30,9 @@ public class CountdownTimer : MonoBehaviour
             enabled = false;
             return;
         }
-        hud.SetParent(playerCamera, false);
-        hud.localPosition = cameraOffset;
-        hud.localRotation = Quaternion.identity;
+        //hud.SetParent(playerCamera, false);
+        //hud.localPosition = cameraOffset;
+       // hud.localRotation = Quaternion.identity;
         IsRunning = endGame.CurrentResult == EndGame.Result.None;
         RefreshText();
     }
