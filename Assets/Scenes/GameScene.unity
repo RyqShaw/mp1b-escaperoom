@@ -410,7 +410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1002, guid: fbfcce94217142d0994f951d86822864, type: 3}
       propertyPath: durationSeconds
-      value: 20
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 1101, guid: fbfcce94217142d0994f951d86822864, type: 3}
       propertyPath: m_LocalPosition.z
