@@ -4,11 +4,11 @@ using UnityEngine.Events;
 
 public class Guard_Behavior : MonoBehaviour
 {
-    public Vector3 end;
     private float duration = 2f;
     public GameObject money;
     private bool moving = false;
     public ParticleSystem particle;
+    public GameObject target;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,8 +19,8 @@ public class Guard_Behavior : MonoBehaviour
     void Update()
     {
         if (moving) {
-            transform.position = Vector3.Lerp(transform.position, end, duration * Time.deltaTime);
-            if (transform.position == end) {
+            transform.position = Vector3.Lerp(transform.position, target.transform.position, duration * Time.deltaTime);
+            if (transform.position == target.transform.position) {
                 moving = false;
             }
         }
