@@ -14,6 +14,6 @@ public class BlockedObject : Vent
 
     protected override void OpenAction()
     {
-        return;
+        if (blockedObject) blockedObject.enabled = true;
     }
 }

@@ -7,6 +7,7 @@ public class Collectable : MonoBehaviour
     private XRGrabInteractable _grabInteract;
     [SerializeField] private Score score;
     public ParticleSystem p;
+    public AudioClip sound;
 
     void Awake() {
         _grabInteract = GetComponent<XRGrabInteractable>();
@@ -29,6 +30,7 @@ public class Collectable : MonoBehaviour
     public void Grabbed(SelectEnterEventArgs args) {
         ParticleSystem inst = Instantiate(p, transform.position,Quaternion.identity);
         inst.Play();
+        if (sound) AudioSource.PlayClipAtPoint(sound, gameObject.transform.position);
         if (score) score.value++;
         Destroy(gameObject);
     }
