@@ -6,7 +6,7 @@ public class SleepingGuard : MonoBehaviour
 
     public void OnKilled()
     {
-        hand.SetActive(true);
+        if (hand) hand.SetActive(true);
         Destroy(gameObject);
     }
 }

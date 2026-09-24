@@ -23,8 +23,8 @@ public class Jumpscare : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        jumpscare = box.GetComponent<Crate>()._isOpen;
-        if (jumpscare && check == 1) {
+        if (box == null) {
+            jumpscare = true;
             Jump();
             Debug.Log("Jumped");
             check++;

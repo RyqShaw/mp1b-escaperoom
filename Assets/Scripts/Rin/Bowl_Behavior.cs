@@ -27,8 +27,10 @@ public class Bowl_Behavior : MonoBehaviour
             GameObject bowl2 = Instantiate(newBowl, location, Quaternion.identity);
             bowl2.name = "second";
             corgi.transform.position = location2;
-            table.AddComponent<Rigidbody>();
-            table.AddComponent<GrabOutline>();
+            if (table != null) {
+                table.AddComponent<Rigidbody>();
+                table.AddComponent<GrabOutline>();
+            }
             Destroy(other.gameObject);
             Destroy(empty);
         }
